@@ -1,11 +1,6 @@
 """Pytest fixtures for Selenium tests."""
 
 import pytest
-
-
-def pytest_configure(config):
-    """Register custom markers."""
-    config.addinivalue_line("markers", "smoke: mark test as smoke test")
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -15,6 +10,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
 from config.config import Config
+
+
+def pytest_configure(config):
+    """Register custom markers."""
+    config.addinivalue_line("markers", "smoke: mark test as smoke test")
 
 
 def pytest_addoption(parser):

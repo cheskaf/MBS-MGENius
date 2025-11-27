@@ -2,6 +2,7 @@
 
 import allure
 import pytest
+from selenium.webdriver.common.by import By
 
 
 @allure.feature("Example Tests")
@@ -27,7 +28,7 @@ class TestExample:
         """Test that page loads successfully."""
         driver.get(base_url)
         # Check that body element exists (page loaded)
-        body = driver.find_element("tag name", "body")
+        body = driver.find_element(By.TAG_NAME, "body")
         assert body is not None
 
     @allure.title("Test URL is correct")
@@ -63,7 +64,7 @@ class TestBrowserFunctions:
         """Test that page refresh works."""
         driver.get(base_url)
         driver.refresh()
-        body = driver.find_element("tag name", "body")
+        body = driver.find_element(By.TAG_NAME, "body")
         assert body is not None
 
 
