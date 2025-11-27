@@ -1,0 +1,14 @@
+# Selenium for browser automation
+selenium>=4.15.0
+
+# Pytest for test framework
+pytest>=7.4.0
+
+# Pytest-html for HTML test reports
+pytest-html>=4.1.0
+
+# Allure for advanced test reporting
+allure-pytest>=2.13.0
+
+# WebDriver manager for automatic driver management
+webdriver-manager>=4.0.0

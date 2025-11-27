@@ -1,0 +1,6 @@
+{
+    "base_url": "https://example.com",
+    "login_url": "/login",
+    "dashboard_url": "/dashboard",
+    "api_url": "https://api.example.com"
+}
