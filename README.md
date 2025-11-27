@@ -14,7 +14,9 @@ project/
 ├── utils/                  # Helper scripts (login)
 │   └── login.py
 ├── config/                 # Test configuration (users, urls)
-│   └── config.py
+│   ├── config.py           # Configuration loader
+│   ├── urls.json           # URL configuration
+│   └── users.json          # User credentials
 ├── conftest.py             # Pytest fixtures
 ├── requirements.txt        # Python dependencies
 └── README.md               # Setup instructions
@@ -48,7 +50,37 @@ project/
 
 ## Configuration
 
-Set environment variables to configure the tests:
+### JSON Configuration Files
+
+Configure URLs in `config/urls.json`:
+```json
+{
+    "base_url": "https://your-app-url.com",
+    "login_url": "/login",
+    "dashboard_url": "/dashboard",
+    "api_url": "https://api.your-app-url.com"
+}
+```
+
+Configure test users in `config/users.json`:
+```json
+{
+    "standard_user": {
+        "username": "your_username",
+        "password": "your_password"
+    },
+    "admin_user": {
+        "username": "admin_username",
+        "password": "admin_password"
+    }
+}
+```
+
+> **Note:** For production or CI/CD environments, use environment variables for sensitive credentials instead of storing them in JSON files.
+
+### Environment Variables (Override JSON)
+
+Environment variables take precedence over JSON configuration:
 
 ```bash
 # Base URL for testing
