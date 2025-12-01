@@ -58,7 +58,28 @@ project/
 pytest tests/
 ```
 
+### Running Headless Tests
+You can run tests in headless mode (browser runs without UI), useful for CI/CD or faster local runs:
+```bash
+# Run Chrome headless
+pytest tests/ --browser chrome --headless
 
+# Run Firefox headless
+pytest tests/ --browser firefox --headless
+```
+
+### Running Parallel Tests
+Use pytest-xdist to execute tests in parallel, speeding up large test suites:
+```bash
+# Install xdist if not already installed
+pip install pytest-xdist
+
+# Run tests with 4 parallel workers
+pytest -n 4
+
+# Combine with headless mode
+pytest -n 2 --browser chrome --headless
+```
 ### Additional Options
 
 ```bash
@@ -86,6 +107,9 @@ pytest tests/test_example.py::TestExample
 
 # Run specific test method
 pytest tests/test_example.py::TestExample::test_page_title
+
+# Run parallel tests
+pytest tests\test_admin\test_A1_login.py --alluredir=allure-results -n 4 --browser chrome --headless
 ```
 ## Reports
 

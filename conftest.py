@@ -15,9 +15,10 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     config.addinivalue_line("markers", "admin: mark test as admin test")
 
-@pytest.fixture
+@pytest.fixture(params=["chrome", "firefox"])
 def driver(request):
-    browser = request.config.getoption("--browser")
+    browser = request.param # Use parameterized fixture for both browsers
+    # browser = request.config.getoption("--browser") # Uncomment to use command line option
     headless = request.config.getoption("--headless")
 
     if browser.lower() == "chrome":
