@@ -1,10 +1,98 @@
 {
-    "standard_user": {
-        "username": "test_user",
-        "password": "test_password"
-    },
-    "admin_user": {
-        "username": "admin_user",
-        "password": "admin_password"
-    }
+    "employees": [
+        {
+            "email": "maria.santos@test.com",
+            "password": "test_password",
+            "employee_code": "EMP001",
+            "last_name": "Santos",
+            "first_name": "Maria",
+            "middle_name": "Grace",
+            "suffix": "",
+            "gender": "Female",
+            "position": "Software Engineer",
+            "date_hired": "01/15/2022",
+            "rank": "Rank & File",
+            "department": "IT",
+            "group": "N/A",
+            "immediate_superior": "John Reyes",
+            "line_manager": "Anna Cruz",
+            "status": "Active"
+        },
+        {
+            "email": "juan.garcia@test.com",
+            "password": "test_password",
+            "employee_code": "EMP002",
+            "last_name": "Garcia",
+            "first_name": "Juan",
+            "middle_name": "",
+            "suffix": "Jr.",
+            "gender": "Male",
+            "position": "HR Specialist",
+            "date_hired": "03/10/2021",
+            "rank": "Supervisor",
+            "department": "HR",
+            "group": "N/A",
+            "immediate_superior": "Sofia Lim",
+            "line_manager": "Robert Tan",
+            "status": "Active"
+        },
+        {
+            "email": "angela.delacruz@test.com",
+            "password": "test_password",
+            "employee_code": "EMP003",
+            "last_name": "De la Cruz",
+            "first_name": "Angela",
+            "middle_name": "Marie",
+            "suffix": "",
+            "gender": "Female",
+            "position": "Finance Analyst",
+            "date_hired": "07/20/2020",
+            "rank": "Manager",
+            "department": "Finance",
+            "group": "N/A",
+            "immediate_superior": "Mark Villanueva",
+            "line_manager": "Linda Reyes",
+            "status": "Active"
+        }
+    ],
+    "trainers": [
+        {
+            "email": "ramon.lopez@test.com",
+            "password": "test_password",
+            "employee_code": "TRN001",
+            "last_name": "Lopez",
+            "first_name": "Ramon",
+            "middle_name": "",
+            "suffix": "",
+            "gender": "Male",
+            "position": "Trainer",
+            "date_hired": "11/05/2023",
+            "rank": "Assistant Manager",
+            "department": "Learning & Development",
+            "group": "N/A",
+            "immediate_superior": "N/A",
+            "line_manager": "N/A",
+            "status": "Active"
+        }
+    ],
+    "admins": [
+        {
+            "email": "anna.reyes@test.com",
+            "password": "test_password",
+            "employee_code": "ADM001",
+            "last_name": "Reyes",
+            "first_name": "Anna",
+            "middle_name": "",
+            "suffix": "",
+            "gender": "Female",
+            "position": "Admin",
+            "date_hired": "02/01/2019",
+            "rank": "Executive Committee (ExeCom)",
+            "department": "Administration",
+            "group": "N/A",
+            "immediate_superior": "N/A",
+            "line_manager": "N/A",
+            "status": "Active"
+        }
+    ]
 }

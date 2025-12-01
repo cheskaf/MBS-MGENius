@@ -1,25 +1,28 @@
 # MBS-MGENius
 
-Selenium + pytest test automation framework with HTML and Allure reporting.
+This repository contains automated tests using Selenium WebDriver, Pytest, and Allure Reports. Tests follow the Page Object Model (POM).
 
 ## Project Structure
 
 ```
 project/
 │
-├── tests/                  # Test scripts (pytest)
-│   └── test_example.py
-├── Elements/               # Page object classes
-│   └── sidebar.py
-├── utils/                  # Helper scripts (login)
-│   └── login.py
-├── config/                 # Test configuration (users, urls)
-│   ├── config.py           # Configuration loader
-│   ├── urls.json           # URL configuration
-│   └── users.json          # User credentials
-├── conftest.py             # Pytest fixtures
+├── tests/                  # Test scripts organized by role
+│   └── test_admin/         # Admin-related tests
+│       └── test_A1_login.py
+│
+├── pages/                  # Page Object Model classes
+│   └── admin_pages/
+│   │   ├── login_page.py
+│   │   └── dashboard_page.py
+│   └── base_page.py        # BasePage with reusable methods
+│
+├── config/                 # Configuration files
+│   └── urls.py             # Page URLs
+│
+├── conftest.py             # Pytest fixtures (driver)
 ├── requirements.txt        # Python dependencies
-└── README.md               # Setup instructions
+└── README.md
 ```
 
 ## Setup Instructions
@@ -28,74 +31,24 @@ project/
 
 - Python 3.8 or higher
 - Chrome or Firefox browser
+- Git
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/cheskaf/MBS-MGENius.git
-   cd MBS-MGENius
-   ```
-
+1. Clone the repository
+   
 2. Create a virtual environment (recommended):
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   venv\Scripts\activate
    ```
 
-3. Install dependencies:
+3. Setup environment variables
+   
+4. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-
-## Configuration
-
-### JSON Configuration Files
-
-Configure URLs in `config/urls.json`:
-```json
-{
-    "base_url": "https://your-app-url.com",
-    "login_url": "/login",
-    "dashboard_url": "/dashboard",
-    "api_url": "https://api.your-app-url.com"
-}
-```
-
-Configure test users in `config/users.json`:
-```json
-{
-    "standard_user": {
-        "username": "your_username",
-        "password": "your_password"
-    },
-    "admin_user": {
-        "username": "admin_username",
-        "password": "admin_password"
-    }
-}
-```
-
-> **Note:** For production or CI/CD environments, use environment variables for sensitive credentials instead of storing them in JSON files.
-
-### Environment Variables (Override JSON)
-
-Environment variables take precedence over JSON configuration:
-
-```bash
-# Base URL for testing
-export BASE_URL="https://your-app-url.com"
-
-# Browser selection (chrome/firefox)
-export BROWSER="chrome"
-
-# Headless mode (true/false)
-export HEADLESS="true"
-
-# Test user credentials
-export TEST_USERNAME="your_username"
-export TEST_PASSWORD="your_password"
-```
 
 ## Running Tests
 
@@ -105,23 +58,6 @@ export TEST_PASSWORD="your_password"
 pytest tests/
 ```
 
-### Run with pytest-html Report
-
-```bash
-pytest tests/ --html=reports/report.html --self-contained-html
-```
-
-### Run with Allure Report
-
-1. Run tests with Allure:
-   ```bash
-   pytest tests/ --alluredir=allure-results
-   ```
-
-2. Generate and view the report:
-   ```bash
-   allure serve allure-results
-   ```
 
 ### Additional Options
 
@@ -132,14 +68,15 @@ pytest tests/ --no-headless
 # Run with specific browser
 pytest tests/ --browser=firefox
 
-# Run only smoke tests
-pytest tests/ -m smoke
+# Run only admin tests
+pytest tests/ -m admin
 
 # Run with verbose output
 pytest tests/ -v
 
 # Run specific test file
 pytest tests/test_example.py
+pytest tests/test_admin/test_A1_login.py
 
 # Run specific test class
 pytest tests/test_example.py::TestExample
@@ -147,49 +84,6 @@ pytest tests/test_example.py::TestExample
 # Run specific test method
 pytest tests/test_example.py::TestExample::test_page_title
 ```
-
-## Writing Tests
-
-### Example Test
-
-```python
-import allure
-import pytest
-
-@allure.feature("My Feature")
-class TestMyFeature:
-    
-    @allure.title("Test description")
-    def test_example(self, driver, base_url):
-        driver.get(base_url)
-        assert driver.title == "Expected Title"
-```
-
-### Using Page Objects
-
-```python
-from Elements.sidebar import Sidebar
-
-def test_sidebar(self, driver, base_url):
-    driver.get(base_url)
-    sidebar = Sidebar(driver)
-    assert sidebar.is_visible()
-```
-
-### Using Login Helper
-
-```python
-from utils.login import LoginHelper
-from config.config import TestUsers
-
-def test_login(self, driver, base_url):
-    driver.get(base_url)
-    login = LoginHelper(driver)
-    user = TestUsers.STANDARD_USER
-    success = login.login(user["username"], user["password"])
-    assert success
-```
-
 ## Reports
 
 ### pytest-html
@@ -215,6 +109,19 @@ allure serve allure-results
 allure generate allure-results -o allure-report
 ```
 
-## License
+## Notes
 
-MIT License
+### Pages (`pages/`)
+
+* **BasePage**: Common methods like `click`, `send_keys`, `get_text`, `navigate_to`, and waits.
+* For **Allure**, prefer `@allure.step` inside Page Object methods for better traceability.
+
+### Tests (`tests/`)
+
+* **Class-based grouping** for shared Allure labels (`epic` and `feature`).
+
+### Future enhancements
+- Dockerized Selenium for CI/CD
+- Headless browser execution
+- Reporting screenshots on failure
+

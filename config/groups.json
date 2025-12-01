@@ -1,0 +1,24 @@
+{
+    "groups": [
+        {
+            "name": "IT Department",
+            "status": "active"
+        },
+        {
+            "name": "HR Department",
+            "status": "active"
+        },
+        {
+            "name": "Finance Department",
+            "status": "active"
+        },
+        {
+            "name": "Learning & Development",
+            "status": "active"
+        },
+        {
+            "name": "Admin Team",
+            "status": "inactive"
+        }
+    ]
+}

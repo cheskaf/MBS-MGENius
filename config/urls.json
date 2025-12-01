@@ -1,6 +1,82 @@
 {
-    "base_url": "https://example.com",
-    "login_url": "/login",
-    "dashboard_url": "/dashboard",
-    "api_url": "https://api.example.com"
+    "roles": {
+        "admin": {
+            "authentication": {
+                "login": "/admin/login",
+                "logout": "/admin/logout"
+            },
+            "dashboard": {
+                "view": "/admin"
+            },
+            "modules": {
+                "view": "/admin/webinars?type=course",
+                "create": "/admin/webinars/create",
+                "edit": "/admin/webinars/{id}/edit",
+                "module_employees": "/admin/webinars/{id}/students",
+                "module_send_notification": "/admin/webinars/{id}/sendNotification",
+                "module_quizzes": "/admin/quizzes/create/{id}",
+                "module_quiz_results": "/admin/quizzes/{id}",
+                "module_quiz_answers": "/public/admin/quizzes/{quiz_id}/{attempt_id}/view",
+                "module_preview": "/course/{slug}",
+                "module_learning_page": "/course/learning/{slug}"
+            },
+            "categories": {
+                "view": "/admin/categories",
+                "create": "/admin/categories/create",
+                "edit": "/admin/categories/{id}/edit"
+            },
+            "users": {
+                "view_admin": "/admin/staffs",
+                "view_employee": "/admin/students",
+                "view_trainers": "/admin/instructors",
+                "create": "/admin/users/create",
+                "edit": "/admin/users/{id}/edit",
+                "individual_report": "/admin/users/badges/{id}",
+                "all_employees_report": "/public/admin/viewall",
+                "user_roles": "/admin/roles"
+            },
+            "groups": {
+                "view": "/admin/users/groups",
+                "create": "/admin/users/groups/create",
+                "edit": "/admin/users/groups/{id}/edit"
+            },
+            "notifications": {
+                "view_received": "/public/admin/notifications",
+                "view_posted": "/admin/notifications/posted",
+                "send_notification": "/admin/notifications/send"
+            },
+            "settings": {
+                "change_password": "/admin/users/{id}/editPassword"
+            }
+        },
+        "employee": {
+            "authentication": {
+                "login": "/login",
+                "logout": "/logout"
+            },
+            "dashboard": {
+                "view": "/panel"
+            },
+            "notifications": {
+                "view": "/panel/notifications"
+            },
+            "my_modules": {
+                "view": "/panel/webinars/purchases",
+                "module_preview": "/course/{slug}",
+                "module_learning_page": "/course/learning/{slug}"
+            },
+            "quizzes": {
+                "quiz_taking": "/panel/quizzes/{id}/start",
+                "quiz_status": "/panel/quizzes/{id}/status",
+                "quiz_results": "/panel/quizzes/my-results"
+            },
+            "settings": {
+                "step_1": "/panel/setting",
+                "step_2": "/panel/setting/step/2",
+                "step_3": "/panel/setting/step/3",
+                "step_4": "/panel/setting/step/4",
+                "step_5": "/panel/setting/step/5"
+            }
+        }
+    }
 }

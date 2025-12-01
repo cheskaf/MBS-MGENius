@@ -1,0 +1,39 @@
+{
+    "categories": [
+        {
+            "name": "Onboarding",
+            "subcategories": [
+                "Orientation",
+                "Policy Review",
+                "Welcome Program"
+            ]
+        },
+        {
+            "name": "Health & Safety",
+            "subcategories": [
+                "Workplace Safety",
+                "Emergency Procedures",
+                "Health Policies"
+            ]
+        },
+        {
+            "name": "Compliance",
+            "subcategories": [
+                "Data Privacy",
+                "Code of Conduct"
+            ]
+        },
+        {
+            "name": "Training & Development",
+            "subcategories": [
+                "Skill Development",
+                "Leadership Programs",
+                "Workshops"
+            ]
+        },
+        {
+            "name": "HR Policies",
+            "subcategories": []
+        }
+    ]
+}
