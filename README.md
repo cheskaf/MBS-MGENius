@@ -65,6 +65,9 @@ pytest tests/
 # Run tests in headed mode (visible browser)
 pytest tests/ --no-headless
 
+# Run tests in headless mode
+pytest tests/ --alluredir=allure-results --browser chrome --headless
+
 # Run with specific browser
 pytest tests/ --browser=firefox
 
