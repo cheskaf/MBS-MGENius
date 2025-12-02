@@ -109,7 +109,14 @@ pytest tests/test_example.py::TestExample
 pytest tests/test_example.py::TestExample::test_page_title
 
 # Run parallel tests
-pytest tests\test_admin\test_A1_login.py --alluredir=allure-results -n 4 --browser chrome --headless
+pytest tests\test_admin\test_A1_login.py --alluredir=allure-results -n 4 --browser chrome 
+
+# Runs all 3 browsers in parallel by default
+pytest tests\test_admin\test_A1_login.py --alluredir=allure-results -n 3
+
+# Only 1 browser
+pytest --browser chrome
+pytest --browser firefox --headless
 ```
 ## Reports
 
@@ -135,6 +142,26 @@ allure serve allure-results
 # Generate static report
 allure generate allure-results -o allure-report
 ```
+
+#### Cleaning / Retaining Results (Allure)
+
+- **Clean runs (local tests)**  
+  - Delete `allure-results/` before each run to get a fresh report.
+  - Command example:
+    ```bash
+    pytest --alluredir=allure-results
+    allure generate allure-results -o allure-report --clean
+    allure open allure-report
+    ```
+
+- **Historical runs / trend tracking (CI/CD)**  
+  - Keep previous `allure-results/` folders to merge with new results.  
+  - Allure can generate trends across multiple runs when results are preserved.  
+  - Example:
+    ```bash
+    allure generate allure-results -o allure-report --clean=false
+    allure open allure-report
+    ```
 
 ## Notes
 
