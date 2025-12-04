@@ -24,6 +24,13 @@ class BasePage:
     def get_text(self, locator):
         return self.wait.until(EC.visibility_of_element_located(locator)).text
     
+    def is_element_displayed(self, locator):
+        try:
+            element = self.wait.until(EC.visibility_of_element_located(locator))
+            return element.is_displayed()
+        except:
+            return False
+    
     def wait_for_element_visibility(self, locator):
         self.wait.until(EC.visibility_of_element_located(locator))
 

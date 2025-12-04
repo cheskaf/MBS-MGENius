@@ -1,7 +1,7 @@
 import pytest
 import allure
-from pages.admin_pages.login_page import LoginPage
-from pages.admin_pages.dashboard_page import DashboardPage
+from elements.admin_pages.login_page import LoginPage
+from elements.admin_pages.dashboard_page import DashboardPage
 
 invalid_cases = [
     ("invalid@example.com", "wrongpass", "Access Denied"),

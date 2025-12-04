@@ -1,6 +1,6 @@
 import pytest
 import allure
-from pages.admin_pages.dashboard_page import DashboardPage
+from elements.admin_pages.dashboard_page import DashboardPage
 
 @allure.epic("Admin User Features")
 @allure.feature("A1 - Admin Dashboard")

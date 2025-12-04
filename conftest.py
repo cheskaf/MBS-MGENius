@@ -17,7 +17,7 @@ def pytest_configure(config):
     allure.dynamic.parameter("branch", os.getenv("GIT_BRANCH", "main")) # Branch info
     
 # Default browsers if no --browser is specified
-default_browsers = ["chrome", "firefox"] # Edge still has some issues
+default_browsers = ["chrome"] # Edge still has some issues
 
 @pytest.fixture(params=default_browsers)
 def driver(request):
@@ -85,6 +85,8 @@ def pytest_runtest_makereport(item, call):
     if report.when == "call" and report.failed:
         driver = item.funcargs.get("driver")  # access driver fixture
         if driver:
+            if not os.path.exists("screenshots"):
+                os.makedirs("screenshots")
             screenshot_name = f"screenshots/{item.name}.png"
             driver.save_screenshot(screenshot_name)
             # Attach to Allure
