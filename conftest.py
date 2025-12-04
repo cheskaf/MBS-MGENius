@@ -1,10 +1,13 @@
 import pytest
 import os
 import allure
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
+from elements.admin_pages.login_page import LoginPage
+from elements.admin_pages.dashboard_page import DashboardPage
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default=None, help="Specify a browser to run")
@@ -75,6 +78,22 @@ def superadmin_credentials():
         "password": os.getenv("SUPERADMIN_PASSWORD")
     }
 
+@pytest.fixture
+def logged_in_superadmin(driver, base_url, superadmin_credentials):
+    login_page = LoginPage(driver)
+    dashboard_page = DashboardPage(driver)
+
+    # Perform login
+    login_page.open(base_url)
+    login_page.enter_email(superadmin_credentials["email"])
+    login_page.enter_password(superadmin_credentials["password"])
+    login_page.click_login()
+
+    # Assert login success before yielding
+    assert dashboard_page.get_current_url().endswith(dashboard_page.PAGE_PATH), "Login failed, not at dashboard page."
+    
+    return dashboard_page
+
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
     # Execute all other hooks to obtain the report object
@@ -87,7 +106,9 @@ def pytest_runtest_makereport(item, call):
         if driver:
             if not os.path.exists("screenshots"):
                 os.makedirs("screenshots")
-            screenshot_name = f"screenshots/{item.name}.png"
+            # Include timestamp in filename to avoid overwriting
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            screenshot_name = f"screenshots/{item.name}_{timestamp}.png"
             driver.save_screenshot(screenshot_name)
             # Attach to Allure
             allure.attach.file(screenshot_name, name="Screenshot", attachment_type=allure.attachment_type.PNG)

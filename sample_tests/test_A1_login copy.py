@@ -16,7 +16,7 @@ invalid_cases = [
 class TestAdminLogin:
 
     @pytest.fixture(autouse=True) # Automatically use this fixture for all tests in the class
-    def setup(self, driver, base_url, superadmin_credentials):
+    def setup_pages(self, driver, base_url, superadmin_credentials):
         self.driver = driver
         self.base_url = base_url
         self.login_page = LoginPage(driver)
@@ -31,8 +31,8 @@ class TestAdminLogin:
         """)
     def test_A1_01(self):
         self.login_page.open(self.base_url)
-        assert self.login_page.is_at_login_page(), "Login page did not load correctly."
-        assert self.login_page.is_login_page_elements_present(), "Not all login page elements are present."
+        assert self.login_page.is_at_login_page()
+        assert self.login_page.is_login_page_elements_present()
     
     #A1_02
     @allure.story("A1_02 - Sign in using Valid Credentials")
@@ -43,12 +43,12 @@ class TestAdminLogin:
     @pytest.mark.flaky(reruns=2, reruns_delay=5) # Retry failed tests up to 2 times with a 5-second delay
     def test_A1_02(self):
         self.login_page.open(self.base_url)
-        assert self.login_page.is_at_login_page(), "Login page did not load correctly."
-        self.login_page.enter_email(self.superadmin_credentials["email"]), 
+        assert self.login_page.is_at_login_page()
+        self.login_page.enter_email(self.superadmin_credentials["email"])
         self.login_page.enter_password(self.superadmin_credentials["password"])
         self.login_page.click_login()
-        assert self.dashboard_page.is_at_dashboard_page(), "Dashboard page did not load correctly."
-        assert "Welcome" in self.dashboard_page.get_welcome_banner_text(), "Welcome banner text is incorrect."
+        assert self.dashboard_page.is_at_dashboard_page()
+        assert "Welcome" in self.dashboard_page.get_welcome_banner_text()
 
     #A1_03
     @allure.story("A1_03 - Sign in using Invalid Credentials")
@@ -60,12 +60,12 @@ class TestAdminLogin:
     @pytest.mark.parametrize("email,password,expected_error", invalid_cases)
     def test_A1_03(self, email, password, expected_error):
         self.login_page.open(self.base_url)
-        assert self.login_page.is_at_login_page(), "Login page did not load correctly."
+        assert self.login_page.is_at_login_page()
         self.login_page.enter_email(email)
         self.login_page.enter_password(password)
         self.login_page.click_login()
-        assert self.login_page.is_at_login_page(), "Login page did not reload correctly after failed login."
-        assert self.login_page.get_error_message() == expected_error, f"Expected error message '{expected_error}', but got '{self.login_page.get_error_message()}'."
+        assert self.login_page.is_at_login_page()
+        assert self.login_page.get_error_message() == expected_error
 
     #A1_04
     @allure.story("A1_04 - Toggle Password Visibility")
@@ -75,7 +75,7 @@ class TestAdminLogin:
         """)
     def test_A1_04(self):
         self.login_page.open(self.base_url)
-        assert self.login_page.is_at_login_page(), "Login page did not load correctly."
+        assert self.login_page.is_at_login_page()
         self.login_page.enter_email(invalid_cases[0][0])
         self.login_page.enter_password(invalid_cases[0][1])
         self.login_page.toggle_password_visibility()

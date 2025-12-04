@@ -11,14 +11,11 @@ class LoginPage(BasePage):
     MGENIUS_TITLE = (By.XPATH, "//h1[normalize-space()='MGENIUS']")
     WELCOME_BANNER = (By.XPATH, "//h3[1]")
     LOGIN_LABEL = (By.XPATH, "//p[normalize-space()='Log In to your Account']")
-
     EMAIL_INPUT = (By.ID, "email")
     PASSWORD_INPUT = (By.ID, "password")
     TOGGLE_PASSWORD_BUTTON = (By.ID, "togglePassword")
-    
     LOGIN_BUTTON = (By.CLASS_NAME, "logButton")
     LOGIN_WITH_SSO_BUTTON = (By.XPATH, "//button[normalize-space()='Login with Microsoft']")
-    
     ERROR_MESSAGE = (By.XPATH, "//h6[normalize-space()='Access Denied']")
     
     # Navigation
@@ -29,7 +26,7 @@ class LoginPage(BasePage):
     @allure.step("Verifying login page URL ends with expected path")
     def is_at_login_page(self):
         return self.get_current_url().endswith(self.PAGE_PATH)
-    
+        
     # Getters for page elements and texts
     @allure.step("Getting page title")
     def get_page_title(self):
@@ -71,7 +68,29 @@ class LoginPage(BasePage):
     def get_error_message(self):
         return self.get_text(self.ERROR_MESSAGE)
 
-    # Actions
+    # Actions    
+    @allure.step("Checking if all expected elements are present on the login page")
+    def is_login_page_elements_present(self):
+        return (self.is_logo_displayed() and
+                self.get_page_title() == "MGENIUS" and
+                "Welcome, Admin" in self.get_welcome_banner_text() and
+                self.get_login_label_text() == "Log In to your Account" and
+                self.is_email_input_displayed() and
+                self.is_password_input_displayed() and
+                self.is_toggle_password_button_displayed() and
+                self.is_login_button_displayed() and
+                self.is_login_with_sso_button_displayed())
+
+    @allure.step("Login with email: {email} and password: {password}")
+    def login(self, email, password):
+        self.enter_email(email)
+        self.enter_password(password)
+        self.click_login()
+    
+    @allure.step("Login with SSO")
+    def login_with_sso(self):
+        self.click_login_with_sso()
+    
     @allure.step("Entering email: {email}")
     def enter_email(self, email):
         self.send_keys(self.EMAIL_INPUT, email)
