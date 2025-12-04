@@ -1,7 +1,7 @@
 # admin_sidebar.py
 import allure
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
+from elements.base_page import BasePage
 
 class AdminSidebar(BasePage):
     SIDEBAR_LOGO = (By.CLASS_NAME, "sidebar-logo")

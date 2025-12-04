@@ -11,7 +11,7 @@ project/
 │   └── test_admin/         # Admin-related tests
 │       └── test_A1_login.py
 │
-├── pages/                  # Page Object Model classes
+├── elements/                  # Page Object Model classes
 │   └── admin_pages/
 │   │   ├── login_page.py
 │   │   └── dashboard_page.py

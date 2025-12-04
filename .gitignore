@@ -211,3 +211,8 @@ reports/
 allure-results/
 allure-report/
 allure-/
+
+# Screenshots
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg

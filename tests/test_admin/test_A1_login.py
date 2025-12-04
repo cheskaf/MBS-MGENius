@@ -1,7 +1,7 @@
 import pytest
 import allure
-from pages.admin_pages.login_page import LoginPage
-from pages.admin_pages.dashboard_page import DashboardPage
+from elements.admin_pages.login_page import LoginPage
+from elements.admin_pages.dashboard_page import DashboardPage
 
 invalid_cases = [
     ("invalid@example.com", "wrongpass", "Access Denied"),
@@ -12,7 +12,7 @@ invalid_cases = [
 
 @allure.epic("Admin User Features")
 @allure.feature("A1 - Admin Login")
-@pytest.mark.parent_suite("Admin User Features")
+@pytest.mark.admin
 class TestAdminLogin:
 
     @pytest.fixture(autouse=True) # Automatically use this fixture for all tests in the class
@@ -31,18 +31,20 @@ class TestAdminLogin:
         """)
     def test_A1_01(self):
         self.login_page.open(self.base_url)
-        with allure.step("Verifying Sign In page URL"):
-            assert self.login_page.get_current_url().endswith(self.login_page.PAGE_PATH)
+        assert self.login_page.is_at_login_page()
+
         with allure.step("Verifying Sign In page elements"):
-            assert self.driver.find_element(*self.login_page.MGENIUS_LOGO).is_displayed()
+            assert self.login_page.is_logo_displayed()
             assert self.login_page.get_page_title() == "MGENIUS"
             assert "Welcome, Admin" in self.login_page.get_welcome_banner_text()
             assert self.login_page.get_login_label_text() == "Log In to your Account"
-            assert self.driver.find_element(*self.login_page.EMAIL_INPUT).is_displayed()
-            assert self.driver.find_element(*self.login_page.PASSWORD_INPUT).is_displayed()
-            assert self.driver.find_element(*self.login_page.TOGGLE_PASSWORD_BUTTON).is_displayed()
-            assert self.driver.find_element(*self.login_page.LOGIN_BUTTON).is_displayed()
-            assert self.driver.find_element(*self.login_page.LOGIN_WITH_SSO_BUTTON).is_displayed()
+
+            assert self.login_page.is_email_input_displayed()
+            assert self.login_page.is_password_input_displayed()
+            assert self.login_page.is_toggle_password_button_displayed()
+
+            assert self.login_page.is_login_button_displayed()
+            assert self.login_page.is_login_with_sso_button_displayed()
     
     #A1_02
     @allure.story("A1_02 - Sign in using Valid Credentials")
@@ -53,15 +55,12 @@ class TestAdminLogin:
     @pytest.mark.flaky(reruns=2, reruns_delay=5) # Retry failed tests up to 2 times with a 5-second delay
     def test_A1_02(self):
         self.login_page.open(self.base_url)
+        assert self.login_page.is_at_login_page()
         self.login_page.enter_email(self.superadmin_credentials["email"])
         self.login_page.enter_password(self.superadmin_credentials["password"])
         self.login_page.click_login()
-
-        with allure.step("Verifying Dashboard page URL"):
-            assert self.dashboard_page.get_current_url().endswith(self.dashboard_page.PAGE_PATH)
-
-        with allure.step("Verifying Dashboard welcome banner"):
-            assert "Welcome" in self.dashboard_page.get_welcome_banner_text()
+        assert self.dashboard_page.is_at_dashboard_page()
+        assert "Welcome" in self.dashboard_page.get_welcome_banner_text()
 
     #A1_03
     @allure.story("A1_03 - Sign in using Invalid Credentials")
@@ -73,7 +72,9 @@ class TestAdminLogin:
     @pytest.mark.parametrize("email,password,expected_error", invalid_cases)
     def test_A1_03(self, email, password, expected_error):
         self.login_page.open(self.base_url)
+        assert self.login_page.is_at_login_page()
         self.login_page.enter_email(email)
         self.login_page.enter_password(password)
         self.login_page.click_login()
+        assert self.login_page.is_at_login_page()
         assert self.login_page.get_error_message() == expected_error
