@@ -8,6 +8,9 @@ ADMIN_DASHBOARD = "admin"
 
 # Modules
 MODULE_LIST = "admin/webinars?type=course",
+MODULE_LIST_PENDING = "admin/webinars?type=course&filter=pending"
+MODULE_LIST_PUBLISHED = "/admin/webinars?type=course&filter=published"
+MODULE_LIST_UNPUBLISHED = "admin/webinars?type=course&filter=unpublished"
 MODULE_CREATE = "admin/webinars/create",
 MODULE_EDIT = "admin/webinars/{id}/edit",
 MODULE_EMPLOYEES = "admin/webinars/{id}/students",

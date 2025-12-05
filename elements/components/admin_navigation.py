@@ -1,55 +1,54 @@
 import allure
 from selenium.webdriver.common.by import By
 from elements.base_page import BasePage
-from elements.admin_pages.login_page import LoginPage
 from config.urls import LANDING_PAGE, ADMIN_DASHBOARD, MODULE_LIST, CATEGORY_LIST, ADMIN_LIST, EMPLOYEE_LIST, TRAINER_LIST, CREATE_USER, USER_ROLES, GROUP_LIST, NOTIFICATIONS_RECEIVED, ADMIN_LOGOUT
 
 class AdminNavigation(BasePage):
+    LANDING_PATH = LANDING_PAGE
+    DASHBOARD_PATH = ADMIN_DASHBOARD
+    MODULES_PATH = MODULE_LIST
+    CATEGORIES_PATH = CATEGORY_LIST
+    ADMIN_USERS_PATH = ADMIN_LIST
+    EMPLOYEE_USERS_PATH = EMPLOYEE_LIST
+    TRAINER_USERS_PATH = TRAINER_LIST
+    NEW_USER_PATH = CREATE_USER
+    USER_ROLES_PATH = USER_ROLES
+    GROUPS_PATH = GROUP_LIST
+    SENT_NOTIF_PATH = NOTIFICATIONS_RECEIVED
+    LOGOUT_PATH = ADMIN_LOGOUT
+
     # Sidebar Locators
     SIDEBAR = (By.ID, "sidebar-wrapper")
     SIDEBAR_LOGO = (By.XPATH, "//img[@alt='Logo']")
     SIDEBAR_TITLE = (By.XPATH, "//a[normalize-space()='MGenius - LMS']")
-    LANDING_PATH = LANDING_PAGE
 
-    DASHBOARD = (By.LINK_TEXT, "Dashboard")
-    DASHBOARD_PATH = ADMIN_DASHBOARD
-
+    # Sidebar Labels
     TRAINING_LABEL = (By.XPATH, "//li[normalize-space()='Training']")
-    MODULES = (By.LINK_TEXT, "Modules")
-    MODULES_PATH = MODULE_LIST
-
     CATEGORIES_LABEL = (By.XPATH, "//li[contains(text(),'Categories')]")
-    CATEGORIES = (By.LINK_TEXT, "Categories")
-    CATEGORIES_PATH = CATEGORY_LIST
-
     USERS_LABEL = (By.XPATH, "//li[normalize-space()='Users']")
+    GROUPS_LABEL = (By.XPATH, "//li[normalize-space()='Groups']")
+    NOTIF_LABEL = (By.XPATH, "//li[contains(text(),'Notifications')]")
+    LOGOUT_LABEL = (By.XPATH, "//li[normalize-space()='Log Out']")
+    
+    # Sidebar Links
+    DASHBOARD = (By.LINK_TEXT, "Dashboard")    
+    MODULES = (By.LINK_TEXT, "Modules")
+    CATEGORIES = (By.LINK_TEXT, "Categories")
     USERS_TOGGLE = (By.XPATH, "//span[normalize-space()='Users']")
     ADMIN_USERS = (By.XPATH, "//a[normalize-space()='Admin']")
-    ADMIN_USERS_PATH = ADMIN_LIST
     EMPLOYEE_USERS = (By.XPATH, "//a[normalize-space()='Employees']")
-    EMPLOYEE_USERS_PATH = EMPLOYEE_LIST
     TRAINER_USERS = (By.XPATH, "//a[normalize-space()='Trainers']")
-    TRAINER_USERS_PATH = TRAINER_LIST
     NEW_USER = (By.XPATH, "//a[normalize-space()='New']")
-    NEW_USER_PATH = CREATE_USER
     USER_ROLES_LINK = (By.XPATH, "//span[normalize-space()='User Roles']")
-    USER_ROLES_PATH = USER_ROLES
-
-    GROUPS_LABEL = (By.XPATH, "//li[normalize-space()='Groups']")
-    GROUPS = (By.XPATH, "//body/div[@id='app']/div[@class='main-wrapper']/div[@class='main-sidebar']/aside[@id='sidebar-wrapper']/ul[@class='sidebar-menu']/li[1]/a[1]")
-    GROUPS_PATH = GROUP_LIST
-
-    NOTIF_LABEL = (By.XPATH, "//li[contains(text(),'Notifications')]")
+    GROUPS = (By.XPATH, "(//span[normalize-space()=\"Learner's Group\"])[1]")
     SENT_NOTIF = (By.XPATH, "//span[normalize-space()='Notifications']")
-    SENT_NOTIF_PATH = NOTIFICATIONS_RECEIVED
-
-    LOGOUT_LABEL = (By.XPATH, "//li[normalize-space()='Log Out']")
     SIDEBAR_LOGOUT = (By.XPATH, "//span[normalize-space()='Logout']")
-    ADMIN_LOGOUT_PATH = ADMIN_LOGOUT
 
     # Header Locators
     HEADER = (By.XPATH, "//nav[@class='navbar navbar-expand-lg main-navbar']")
     SIDEBAR_TOGGLE = (By.XPATH, "//i[@class='fas fa-bars']")
+
+    # Notification Dropdown Locators
     NOTIF_ICON = (By.XPATH, "//i[@class='far fa-bell']")
     NOTIFS_DROPDOWN = (By.XPATH, "//a[@class='nav-link notification-toggle nav-link-lg']")
     NOTIF_MENU = (By.XPATH, "//div[@class='dropdown-menu dropdown-list dropdown-menu-right show']")
@@ -57,13 +56,12 @@ class AdminNavigation(BasePage):
     NOTIF_MENU_NO_DATA = (By.XPATH, "//b[normalize-space()='No Unread Notification']")
     NOTIF_VIEW_ALL = (By.XPATH, "//a[normalize-space()='View All Notifications']")
 
+    # User Dropdown Locators
     HEADER_ICON = (By.XPATH, "//img[@alt='image']")
     HEADER_USER_DROPDOWN = (By.XPATH, "//div[@class='d-sm-none d-lg-inline-block']")
     HEADER_USER_MENU = (By.XPATH, "//div[@class='dropdown-menu dropdown-menu-right show']")
     CHANGE_PASSWORD = (By.XPATH, "//a[normalize-space()='Change Password']")
-    SEND_TO_OUTLOOK = (By.ID, "sendToOutlookBtn")
     HEADER_LOGOUT = (By.XPATH, "//a[@class='dropdown-item has-icon text-danger']")
-
     
     @allure.step("Verifying sidebar is displayed correctly")
     def is_sidebar_displayed(self):
@@ -92,58 +90,97 @@ class AdminNavigation(BasePage):
         user_links = [self.ADMIN_USERS, self.EMPLOYEE_USERS, self.TRAINER_USERS, self.NEW_USER]
         return all(self.is_element_displayed(link) for link in user_links)
     
-    @allure.step("Navigating to Landing Page via sidebar title")
+    @allure.step("Clicking Landing Page link")
     def click_landing_page(self):
         self.click(self.SIDEBAR_TITLE)
     
-    @allure.step("Verifying Dashboard link functionality")
+    @allure.step("Clicking Dashboard link")
     def click_dashboard(self):
         self.click(self.DASHBOARD)
     
-    @allure.step("Verifying Modules link functionality")
+    @allure.step("Clicking Modules link")
     def click_modules(self):
         self.click(self.MODULES)
     
-    @allure.step("Verifying Categories link functionality")
+    @allure.step("Clicking Categories link")
     def click_categories(self):
         self.click(self.CATEGORIES)
     
-    @allure.step("Verifying Admin List link functionality")
+    @allure.step("Clicking Admin List link")
     def click_admin_list(self):
         if not self.is_element_displayed(self.ADMIN_USERS):
             self.click(self.USERS_TOGGLE)
         self.click(self.ADMIN_USERS)
     
-    @allure.step("Verifying Employee List link functionality")
+    @allure.step("Clicking Employee List link")
     def click_employee_list(self):
         if not self.is_element_displayed(self.EMPLOYEE_USERS):
             self.click(self.USERS_TOGGLE)
         self.click(self.EMPLOYEE_USERS)
     
-    @allure.step("Verifying Trainer List link functionality")
+    @allure.step("Clicking Trainer List link")
     def click_trainer_list(self):
         if not self.is_element_displayed(self.TRAINER_USERS):
             self.click(self.USERS_TOGGLE)
         self.click(self.TRAINER_USERS)
 
-    @allure.step("Verifying Create New User link functionality")
+    @allure.step("Clicking Create New User link")
     def click_create_user(self):
         if not self.is_element_displayed(self.NEW_USER):
             self.click(self.USERS_TOGGLE)
         self.click(self.NEW_USER)
 
-    @allure.step("Verifying User Roles link functionality")
+    @allure.step("Clicking User Roles link")
     def click_user_roles(self):
         self.click(self.USER_ROLES_LINK)
     
-    @allure.step("Verifying Groups link functionality")
+    @allure.step("Clicking Groups link")
     def click_groups(self):
         self.click(self.GROUPS)
     
-    @allure.step("Verifying Sent Notifications link functionality")
+    @allure.step("Clicking Sent Notifications link")
     def click_sent_notifications(self):
         self.click(self.SENT_NOTIF)
     
-    @allure.step("Verifying Logout functionality via sidebar")
-    def click_logout(self):
+    @allure.step("Clicking Sidebar Logout link")
+    def click_sidebar_logout(self):
         self.click(self.SIDEBAR_LOGOUT)
+
+    @allure.step("Verifying header is displayed correctly")
+    def is_header_displayed(self):
+        return (self.is_element_displayed(self.HEADER) and
+                self.is_element_displayed(self.SIDEBAR_TOGGLE) and
+                self.is_element_displayed(self.NOTIF_ICON) and
+                self.is_element_displayed(self.NOTIFS_DROPDOWN) and
+                self.is_element_displayed(self.HEADER_ICON) and
+                self.is_element_displayed(self.HEADER_USER_DROPDOWN))
+    
+    @allure.step("Opening notification dropdown")
+    def open_notification_dropdown(self):
+        self.click(self.NOTIFS_DROPDOWN)
+
+    @allure.step("Verifying notification dropdown is displayed correctly")
+    def is_notification_dropdown_displayed(self):
+        return (self.is_element_displayed(self.NOTIF_MENU) and
+                self.is_element_displayed(self.NOTIF_MENU_LABEL) and
+                self.is_element_displayed(self.NOTIF_VIEW_ALL))
+    
+    @allure.step("Opening user dropdown")
+    def open_user_dropdown(self):
+        self.click(self.HEADER_USER_DROPDOWN)
+
+    @allure.step("Verifying user dropdown is displayed correctly")
+    def is_user_dropdown_displayed(self):
+        return (self.is_element_displayed(self.HEADER_USER_MENU) and
+                self.is_element_displayed(self.CHANGE_PASSWORD) and
+                self.is_element_displayed(self.HEADER_LOGOUT))
+
+    @allure.step("Clicking Change Password from header user dropdown")
+    def click_change_password(self):
+        self.open_user_dropdown()
+        self.click(self.CHANGE_PASSWORD)
+
+    @allure.step("Clicking Logout from header user dropdown")
+    def click_header_logout(self):
+        self.open_user_dropdown()
+        self.click(self.HEADER_LOGOUT)

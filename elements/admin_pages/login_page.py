@@ -4,9 +4,9 @@ from elements.base_page import BasePage
 from config.urls import ADMIN_LOGIN
 
 class LoginPage(BasePage):
-    # Page Locators
     PAGE_PATH = ADMIN_LOGIN
-
+    
+    # Page Locators
     MGENIUS_LOGO = (By.CLASS_NAME, "myimg")
     MGENIUS_TITLE = (By.XPATH, "//h1[normalize-space()='MGENIUS']")
     WELCOME_BANNER = (By.XPATH, "//h3[1]")
@@ -101,9 +101,11 @@ class LoginPage(BasePage):
     
     @allure.step("Toggling password visibility")
     def toggle_password_visibility(self):
-        self.is_password_masked(self.PASSWORD_INPUT)  # Check if masked before toggling
         self.click(self.TOGGLE_PASSWORD_BUTTON)
-        self.is_password_unmasked(self.PASSWORD_INPUT)  # Check if unmasked after toggling
+
+    @allure.step("Getting password input type")
+    def get_password_input_type(self):
+        return self.get_element_attribute(self.PASSWORD_INPUT, "type")
 
     @allure.step("Clicking login button")
     def click_login(self):

@@ -85,14 +85,18 @@ def logged_in_superadmin(driver, base_url, superadmin_credentials):
 
     # Perform login
     login_page.open(base_url)
-    login_page.enter_email(superadmin_credentials["email"])
-    login_page.enter_password(superadmin_credentials["password"])
-    login_page.click_login()
+    login_page.login(
+        superadmin_credentials["email"],
+        superadmin_credentials["password"]
+    )
 
-    # Assert login success before yielding
-    assert dashboard_page.get_current_url().endswith(dashboard_page.PAGE_PATH), "Login failed, not at dashboard page."
-    
-    return dashboard_page
+    # Ensure login success
+    assert dashboard_page.is_at_dashboard_page(), "Login failed."
+
+    return {
+        "login_page": login_page,
+        "dashboard_page": dashboard_page
+    }
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
