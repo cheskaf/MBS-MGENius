@@ -4,9 +4,9 @@ from elements.base_page import BasePage
 from config.urls import ADMIN_LOGIN
 
 class LoginPage(BasePage):
-    # Page Locators
     PAGE_PATH = ADMIN_LOGIN
-
+    
+    # Page Locators
     MGENIUS_LOGO = (By.CLASS_NAME, "myimg")
     MGENIUS_TITLE = (By.XPATH, "//h1[normalize-space()='MGENIUS']")
     WELCOME_BANNER = (By.XPATH, "//h3[1]")
