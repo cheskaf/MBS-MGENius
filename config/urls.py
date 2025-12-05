@@ -1,3 +1,6 @@
+# Landing Page
+LANDING_PAGE = ""
+
 # Admin
 ADMIN_LOGIN = "admin/login"
 ADMIN_LOGOUT = "admin/logout"
