@@ -60,21 +60,13 @@ class BasePage:
         except Exception as e:
             raise Exception(f"Failed to wait for element visibility {locator}: {str(e)}")
 
-    @allure.step("Checking if password input is masked: {locator}")
-    def is_password_masked(self, locator):
+    @allure.step("Getting element attribute '{attribute}' from element: {locator}")
+    def get_element_attribute(self, locator, attribute):
         try:
-            element = self.wait.until(EC.visibility_of_element_located(locator))
-            return element.get_attribute("type") == "password"
+            element = self.wait.until(EC.presence_of_element_located(locator))
+            return element.get_attribute(attribute)
         except Exception as e:
-            raise Exception(f"Failed to check if password is masked for element {locator}: {str(e)}")
-    
-    @allure.step("Checking if password input is unmasked: {locator}")
-    def is_password_unmasked(self, locator):    
-        try:
-            element = self.wait.until(EC.visibility_of_element_located(locator))
-            return element.get_attribute("type") == "text"
-        except Exception as e:
-            raise Exception(f"Failed to check if password is unmasked for element {locator}: {str(e)}")
+            raise Exception(f"Failed to get attribute {attribute} from element {locator}: {str(e)}")
     
     @allure.step("Checking if element has class '{class_name}': {locator}")
     def has_class(self, locator, class_name):

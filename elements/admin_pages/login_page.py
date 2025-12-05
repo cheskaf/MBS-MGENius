@@ -101,9 +101,11 @@ class LoginPage(BasePage):
     
     @allure.step("Toggling password visibility")
     def toggle_password_visibility(self):
-        self.is_password_masked(self.PASSWORD_INPUT)  # Check if masked before toggling
         self.click(self.TOGGLE_PASSWORD_BUTTON)
-        self.is_password_unmasked(self.PASSWORD_INPUT)  # Check if unmasked after toggling
+
+    @allure.step("Getting password input type")
+    def get_password_input_type(self):
+        return self.get_element_attribute(self.PASSWORD_INPUT, "type")
 
     @allure.step("Clicking login button")
     def click_login(self):

@@ -44,7 +44,7 @@ class TestAdminLogin:
     def test_A1_02(self):
         self.login_page.open(self.base_url)
         assert self.login_page.is_at_login_page(), "Login page did not load correctly."
-        self.login_page.enter_email(self.superadmin_credentials["email"]), 
+        self.login_page.enter_email(self.superadmin_credentials["email"]) 
         self.login_page.enter_password(self.superadmin_credentials["password"])
         self.login_page.click_login()
         assert self.dashboard_page.is_at_dashboard_page(), "Dashboard page did not load correctly."
@@ -78,4 +78,13 @@ class TestAdminLogin:
         assert self.login_page.is_at_login_page(), "Login page did not load correctly."
         self.login_page.enter_email(invalid_cases[0][0])
         self.login_page.enter_password(invalid_cases[0][1])
+        
+        initial_type = self.login_page.get_password_input_type()
+
+        assert initial_type == "password", "Password input should be masked initially."
         self.login_page.toggle_password_visibility()
+        toggled_type = self.login_page.get_password_input_type()
+        assert toggled_type == "text", "Password input should be visible after toggling."
+        self.login_page.toggle_password_visibility()
+        final_type = self.login_page.get_password_input_type()
+        assert final_type == "password", "Password input should be masked after toggling again."
